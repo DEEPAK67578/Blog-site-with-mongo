@@ -4,19 +4,19 @@ const mongoClient = mongodb.MongoClient
 
 let database;
 
-function getDb() {
-    const client = mongoClient.connect('mongodb://localhost:27017')
+async function connect() {
+    const client = await mongoClient.connect('mongodb://127.0.0.1:27017')
     database = client.db('newblog')
 }
 
-function connectToDatabase() {
+function getDb() {
     if(!database) {
         throw {message:"Database isnt connected"}
     }
     return database
 }
 
-module.exports({
+module.exports = {
     getDb:getDb,
-    connectToDatabase:connectToDatabase
-})
+    connectToDatabase:connect
+}
