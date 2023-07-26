@@ -9,7 +9,7 @@ routes.get("/", (req, res) => {
 
 routes.get("/posts", async (req, res) => {
    const posts = await db.getDb().collection('posts').find().toArray()
-   res.render("post-detail",{posts:posts});
+   res.render("post-list",{posts:posts});
 });
 
 routes.get("/new-post", async (req, res) => {
