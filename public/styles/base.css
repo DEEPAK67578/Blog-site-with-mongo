@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Oleo+Script:wght@700&family=Roboto&display=swap');
+
+html {
+    font-family: 'Roboto';
+    color: rgb(46,45,28);
+}
+
+body {
+    margin: 0;
+}
+
+main {
+    width: 80%;
+    margin: 30px auto;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(89,0,255)
+}
+
+a:hover,
+a:active {
+    color: rgb(232,90,255);
+}
+
+ul,ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#main-header {
+    padding: 30px 10%;
+    background-color: rgb(89,0,255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo a  {
+    font-size: 30px;
+    color: white;
+    font-weight: bold;
+    font-family: 'Roboto';
+}
+
+#main-header ul {
+    display: flex;
+}
+
+#main-header li {
+    margin-left: 30px;
+}
+
+#main-header nav a  {
+    color: white;
+    font-size: 20px;
+}
+
+#main-header nav a:hover {
+    color:rgb(255,217,0)
+}
+
+/* global style */
