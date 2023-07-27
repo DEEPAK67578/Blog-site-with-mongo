@@ -8,13 +8,18 @@ routes.get("/", (req, res) => {
 });
 
 routes.get("/posts", async (req, res) => {
-   const posts = await db.getDb().collection('posts').find().toArray()
-   res.render("post-list",{posts:posts});
+  const posts = await db.getDb().collection("posts").find().toArray();
+  console.log(posts)
+  res.render("post-list", { posts: posts });
 });
 
 routes.get("/new-post", async (req, res) => {
   const authors = await db.getDb().collection("authors").find().toArray();
-  res.render("create-post", { authors: authors });
+  res.render("create-post", {
+    authors: authors,
+    title: "Create Posts",
+    h1Title: "New post",
+  });
 });
 
 routes.post("/new-post", async (req, res) => {
@@ -32,13 +37,43 @@ routes.post("/new-post", async (req, res) => {
       id: new mongoDb.ObjectId(req.body.author),
       name: author.name,
       email: author.email,
-    }
+    },
   };
-  const result = await db.getDb().collection('posts').insertOne(newPost);
-  console.log(result)
-  res.redirect('/posts')
+  const result = await db.getDb().collection("posts").insertOne(newPost);
+  res.redirect("/posts");
 });
 
+routes.post("/posts/:id/delete", async (req, res) => {
+  await db
+    .getDb()
+    .collection("posts")
+    .deleteOne({ _id: new mongoDb.ObjectId(req.params.id) });
+  res.redirect("/posts");
+});
 
+routes.get("/posts/:id/edit", async (req, res) => {
+  const element = await db
+    .getDb()
+    .collection("posts")
+    .findOne({ _id: new mongoDb.ObjectId(req.params.id) });
+  res.render("update-post", { posts: element });
+});
+
+routes.post("/posts/:id/edit", async (req, res) => {
+  const result = await db
+    .getDb()
+    .collection("posts")
+    .updateOne(
+      { _id: new mongoDb.ObjectId(req.params.id) },
+      {
+        $set: {
+          title: req.body.title,
+          summary: req.body.summary,
+          content: req.body.content,
+        },
+      }
+    );
+  res.redirect("/posts");
+});
 
 module.exports = routes;
