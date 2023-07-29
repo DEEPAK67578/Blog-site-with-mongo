@@ -5,7 +5,7 @@ const mongoClient = mongodb.MongoClient
 let database;
 
 async function connect() {
-    const client = await mongoClient.connect('mongodb://127.0.0.1:27017')
+    const client = await mongoClient.connect(process.env.MONGO_URI)
     database = client.db('newblog')
 }
 
