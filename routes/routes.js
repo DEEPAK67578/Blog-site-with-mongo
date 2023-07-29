@@ -9,7 +9,7 @@ routes.get("/", (req, res) => {
 
 routes.get("/posts", async (req, res) => {
   const posts = await db.getDb().collection("posts").find().toArray();
-  console.log(posts)
+  console.log(posts);
   res.render("post-list", { posts: posts });
 });
 
@@ -74,6 +74,23 @@ routes.post("/posts/:id/edit", async (req, res) => {
       }
     );
   res.redirect("/posts");
+});
+
+routes.get("/posts/:id/view", async (req, res) => {
+  const [posts] = await db
+    .getDb()
+    .collection("posts")
+    .find({ _id: new mongoDb.ObjectId(req.params.id) })
+    .toArray();
+  posts.humanReadableDate = posts.date.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  posts.date = posts.date.toISOString()
+  console.log(posts)
+  res.render('post-detail',{posts:posts})
 });
 
 module.exports = routes;
