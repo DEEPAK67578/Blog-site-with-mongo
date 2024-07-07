@@ -15,6 +15,7 @@ routes.get("/posts", async (req, res) => {
 
 routes.get("/new-post", async (req, res) => {
   const authors = await db.getDb().collection("authors").find().toArray();
+  console.log(authors)
   res.render("create-post", {
     authors: authors,
     title: "Create Posts",
